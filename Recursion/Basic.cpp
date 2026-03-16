@@ -10,7 +10,7 @@ void fun(int i,int n){
 //Backtracking method
 void funbt(int i,int n){
     if(i<1) return ;
-    funbt(i-1,n);
+    fun(i-1,n);
     cout << i << endl;
 }
 
