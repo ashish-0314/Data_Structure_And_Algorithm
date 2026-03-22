@@ -47,21 +47,101 @@ bool isPresentLL(Node* head , int val){
     return false;
 }
 
+Node* removeHead(Node* head){
+    if(head == NULL) return head;
+    Node* temp = head;
+    head = head->next;
+    delete temp;
+    return head;
+}
+
+Node* removeTail(Node* head){
+    if(head == NULL || head->next == NULL) return NULL;
+    Node* temp = head ;
+    while(temp->next->next != NULL){
+        temp = temp->next;
+    }
+    delete temp->next;
+    temp->next = nullptr;
+    return head;
+}
+
+Node* removeK(Node* head , int k){
+    if(head == NULL) return head;
+    if(k==1){
+        Node* temp = head;
+        head = head->next;
+        free(temp);
+        return head;
+    }
+
+    int cnt = 0 ;
+    Node* temp = head;
+    Node* prev = NULL;
+    while(temp != NULL){
+        cnt++;
+        if(cnt == k){
+            prev->next = prev->next->next ;
+            free(temp);
+            break ;
+        }
+        prev = temp;
+        temp = temp->next;
+    }
+    return head;
+}
+
+Node* removeEle(Node* head , int ele){
+    if(head == NULL) return head;
+    if(head->data == ele){
+        Node* temp = head;
+        head = head->next;
+        free(temp);
+        return head;
+    }
+    Node* temp = head;
+    Node* prev= NULL;
+    while(temp != NULL){
+        if(temp->data == ele){
+            prev->next = prev->next->next;
+            free(temp);
+            break;
+        }
+        prev= temp ;
+        temp = temp->next;
+    }
+    return head;
+}
+
+void printLL(Node *head){
+    while(head != NULL){
+        cout<<head->data <<" ";
+        head = head->next;
+    }
+    cout<<endl;
+}
+
 int main(){
-    vector<int> arr = {1,2,3,4,5};
+    vector<int> arr = {1,2,3,24,5};
     // Node y = Node(arr[0],nullptr);
     // cout<<y.data<<endl;
     // cout<<y.next<<endl;
     Node* head = convertArr2LL(arr);
     cout<< head->data; 
 
-    Node* temp = head;
-    while(temp){
-        cout<<temp->data<<" ";
-        temp = temp->next;
-    }
+    // Node* temp = head;
+    // while(temp){
+    //     cout<<temp->data<<" ";
+    //     temp = temp->next;
+    // }
     cout<<LengthofLL(head);
 
     //cout<<isPresentLL(head,4);
     if(isPresentLL(head,4)) cout<<"YES";
+
+    //head = removeHead(head);
+    //head = removeTail(head);
+    //head = removeK(head , 2);
+    head = removeEle(head ,24 );
+    printLL(head);
 }
