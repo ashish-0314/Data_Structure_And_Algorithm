@@ -113,6 +113,61 @@ Node* removeEle(Node* head , int ele){
     return head;
 }
 
+Node* InsertHead(Node* head , int val){
+    Node* temp = new Node(val,head);
+    return temp;
+}
+
+Node* InsertTail(Node* head , int val){
+    if(head== NULL) return new Node(val);
+    Node* temp = head;
+    while(temp->next != NULL){
+        temp = temp->next;
+    }
+    Node* newNode = new Node(val);
+    temp->next = newNode;
+    return head;
+}
+
+Node* InsertPosition(Node* head , int ele  , int k){
+    if(head==NULL){
+        if(k==1) return new Node(ele);
+        else return head;
+    }
+    if(k==1) return new Node(ele,head);
+
+    int cnt = 0 ;
+    Node* temp = head;
+    while(temp != NULL){
+        cnt++;
+
+        if(cnt == k-1){
+            Node* x = new Node(ele);
+            x->next = temp->next;
+            temp->next = x;
+            break;
+        }
+        temp = temp->next;
+    }
+    return head;
+}
+
+Node* InsertBeforeValue(Node* head , int ele  , int val){
+    if(head==NULL) return NULL;
+    if(head->data==val) return new Node(ele,head);
+    Node* temp = head;
+    while(temp->next != NULL){
+        if(temp->next->data == val){
+            Node* x = new Node(ele);
+            x->next = temp->next;
+            temp->next = x;
+            break;
+        }
+        temp = temp->next;
+    }
+    return head;
+}
+
 void printLL(Node *head){
     while(head != NULL){
         cout<<head->data <<" ";
@@ -142,6 +197,11 @@ int main(){
     //head = removeHead(head);
     //head = removeTail(head);
     //head = removeK(head , 2);
-    head = removeEle(head ,24 );
+    //head = removeEle(head ,24 );
+    //head = InsertHead(head,55);
+    //head = InsertTail(head ,99);
+    //head = InsertPosition(head,14,3);
+    head = InsertBeforeValue(head,35,24);
+
     printLL(head);
 }
